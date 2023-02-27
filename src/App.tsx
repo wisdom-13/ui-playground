@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from './components/Carousel';
 import InfiniteScrollUI from './project/InfiniteScrollUI';
+import IntersectionObserverUI from './project/IntersectionObserverUI';
 import ModalUI from './project/ModalUI';
 import PaginationUI from './project/PaginationUI';
 import SkeletonUI from './project/SkeletonUI';
@@ -11,7 +12,8 @@ export default function App() {
     // <Carousel />
     // <PaginationUI />
     // <ModalUI />
-    <InfiniteScrollUI />
+    // <InfiniteScrollUI />
+    <IntersectionObserverUI />
   );
 }
 
