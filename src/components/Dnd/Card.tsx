@@ -2,23 +2,28 @@ import type { Identifier, XYCoord } from 'dnd-core'
 import type { FC } from 'react'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import styled from '@emotion/styled/macro';
 
 export const ItemTypes = {
   CARD: 'card',
 }
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-}
+
+const CardItem = styled.div<{ index: number, grid: Array<number> }>`
+  border: 1px dashed gray;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  cursor: move;
+  grid-column: auto / span ${({ grid }) => grid[0]};
+  grid-row: auto / span ${({ grid }) => grid[1]};
+`;
+
 
 export interface CardProps {
   id: any
   text: string
   index: number
+  grid: Array<number>
   moveCard: (dragIndex: number, hoverIndex: number) => void
 }
 
@@ -28,7 +33,7 @@ interface DragItem {
   type: string
 }
 
-export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
+export const Card: FC<CardProps> = ({ id, text, index, grid, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -104,8 +109,11 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      {text}
-    </div>
+    // <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+    //   {text}
+    // </div>
+    <CardItem index={index} grid={grid} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+      [{id}] {text}
+    </CardItem>
   )
 }

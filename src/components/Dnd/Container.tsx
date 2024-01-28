@@ -1,16 +1,22 @@
 import update from 'immutability-helper'
-import type { FC } from 'react'
 import { useCallback, useState } from 'react'
+import styled from '@emotion/styled/macro';
 
 import { Card } from './Card'
 
-const style = {
-  width: 400,
-}
+const Wrap = styled.div`
+  display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(5, minmax(50px,auto));
+	grid-auto-flow: dense;
+  gap: 1rem;
+`;
+
 
 export interface Item {
   id: number
   text: string
+  grid: Array<number>
 }
 
 export interface ContainerState {
@@ -22,30 +28,37 @@ export default function Container() {
     {
       id: 1,
       text: 'Write a cool JS library',
+      grid: [1, 1],
     },
     {
       id: 2,
       text: 'Make it generic enough',
+      grid: [2, 1],
     },
     {
       id: 3,
       text: 'Write README',
+      grid: [1, 2],
     },
     {
       id: 4,
       text: 'Create some examples',
+      grid: [1, 1],
     },
     {
       id: 5,
       text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+      grid: [1, 1],
     },
     {
       id: 6,
       text: '???',
+      grid: [1, 1],
     },
     {
       id: 7,
       text: 'PROFIT',
+      grid: [1, 1],
     },
   ])
 
@@ -61,13 +74,14 @@ export default function Container() {
   }, [])
 
   const renderCard = useCallback(
-    (card: { id: number; text: string }, index: number) => {
+    (card: Item, index: number) => {
       return (
         <Card
           key={card.id}
           index={index}
           id={card.id}
           text={card.text}
+          grid={card.grid}
           moveCard={moveCard}
         />
       )
@@ -77,7 +91,10 @@ export default function Container() {
 
   return (
     <>
-      <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
+      {/* <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div> */}
+      <Wrap>
+        {cards.map((card, i) => renderCard(card, i))}
+      </Wrap>
     </>
   )
 }
