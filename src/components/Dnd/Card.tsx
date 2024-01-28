@@ -8,14 +8,14 @@ export const ItemTypes = {
   CARD: 'card',
 }
 
-
-const CardItem = styled.div<{ index: number, grid: Array<number> }>`
+const CardItem = styled.div<{ index: number, grid: Array<number>, opacity: number }>`
   border: 1px dashed gray;
   padding: 0.5rem 1rem;
   background-color: white;
   cursor: move;
   grid-column: auto / span ${({ grid }) => grid[0]};
   grid-row: auto / span ${({ grid }) => grid[1]};
+  opacity: ${({ opacity }) => opacity};
 `;
 
 
@@ -109,11 +109,11 @@ export const Card: FC<CardProps> = ({ id, text, index, grid, moveCard }) => {
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
-    // <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-    //   {text}
-    // </div>
-    <CardItem index={index} grid={grid} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      [{id}] {text}
-    </CardItem>
+    <>
+
+      <CardItem index={index} grid={grid} opacity={opacity} ref={ref} data-handler-id={handlerId}>
+        [{id}] {text}
+      </CardItem>
+    </>
   )
 }
